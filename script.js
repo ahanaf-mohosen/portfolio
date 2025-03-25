@@ -1,32 +1,63 @@
-// Projects Data
+// Projects Data (6 Projects)
 const projects = [
     {
+        title: "Student Management System",
+        description: "C# application for managing student records",
+        image: "https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80"
+    },
+    {
         title: "E-Commerce Platform",
-        description: "Full-stack online shopping platform with payment integration",
-        image: "https://images.unsplash.com/photo-1556742205-e10c9486e506?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        demo: "#",
-        code: "#"
+        description: "Full-stack online shopping system",
+        image: "https://images.unsplash.com/photo-1556742205-e10c9486e506?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
     },
     {
-        title: "Task Manager App",
-        description: "Collaborative task management web application",
-        image: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        demo: "#",
-        code: "#"
+        title: "Library Database",
+        description: "MySQL database management system",
+        image: "https://images.unsplash.com/photo-1548048026-5a1a941d93d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
     },
     {
-        title: "Social Media Dashboard",
-        description: "Analytics dashboard with real-time metrics",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        demo: "#",
-        code: "#"
+        "title": "Task Manager Pro",
+        "description": "A productivity app built with .NET and Blazor",
+        "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
     },
     {
-        title: "Blog Platform",
-        description: "Modern CMS for content creators",
-        image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1353&q=80",
-        demo: "#",
-        code: "#"
+        title: "Portfolio Website",
+        description: "Responsive personal portfolio site",
+        image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1353&q=80"
+    },
+    {
+        title: "Linux Automation",
+        description: "Bash scripting for system automation",
+        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    }
+];
+
+// Skills Data
+const skills = [
+    {
+        category: "Programming Languages",
+        items: [
+            { name: "C", icon: "fas fa-code", level: "proficient" },
+            { name: "C#", icon: "fas fa-code", level: "proficient" },
+            { name: "MySQL", icon: "fas fa-database", level: "proficient" },
+            { name: "HTML5", icon: "fab fa-html5", level: "proficient" },
+            { name: ".NET", icon: "fab fa-windows", level: "learning" }
+        ]
+    },
+    {
+        category: "Operating Systems",
+        items: [
+            { name: "Windows", icon: "fab fa-windows", level: "familiar" },
+            { name: "Linux", icon: "fab fa-linux", level: "familiar" }
+        ]
+    },
+    {
+        category: "Software & Tools",
+        items: [
+            { name: "Microsoft Office", icon: "fas fa-file-word", level: "experienced" },
+            { name: "Linux Terminal", icon: "fas fa-terminal", level: "familiar" },
+            { name: "Troubleshooting", icon: "fas fa-tools", level: "familiar" }
+        ]
     }
 ];
 
@@ -35,70 +66,61 @@ function initProjects() {
     const container = document.getElementById('projects-container');
     
     projects.forEach(project => {
-        const projectCard = document.createElement('div');
-        projectCard.className = 'project-card';
-        projectCard.innerHTML = `
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.innerHTML = `
             <img src="${project.image}" alt="${project.title}" class="project-image">
             <div class="project-overlay">
-                <h3 class="project-title">${project.title}</h3>
-                <p class="project-description">${project.description}</p>
-                <div class="project-links">
-                    <a href="${project.demo}" class="project-link">Live Demo</a>
-                    <a href="${project.code}" class="project-link">View Code</a>
-                </div>
+                <h3>${project.title}</h3>
+                <p>${project.description}</p>
             </div>
         `;
-        container.appendChild(projectCard);
+        container.appendChild(card);
     });
 }
 
-// Smooth Scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+// Initialize Skills
+function initSkills() {
+    const container = document.getElementById('skills-container');
+    
+    skills.forEach(category => {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'skills-category';
+        
+        categoryDiv.innerHTML = `
+            <h3 class="category-title">${category.category}</h3>
+            <div class="skills-grid"></div>
+        `;
+        
+        const grid = categoryDiv.querySelector('.skills-grid');
+        category.items.forEach(skill => {
+            const skillCard = document.createElement('div');
+            skillCard.className = 'skill-card';
+            skillCard.innerHTML = `
+                <i class="${skill.icon} skill-icon"></i>
+                <h4>${skill.name}</h4>
+                <span class="skill-level level-${skill.level}">${skill.level}</span>
+            `;
+            grid.appendChild(skillCard);
+        });
+        
+        container.appendChild(categoryDiv);
+    });
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    initProjects();
+    initSkills();
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
         });
     });
 });
-
-// Set Current Year
-document.getElementById('current-year').textContent = new Date().getFullYear();
-
-// Scroll Animation
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, {
-    threshold: 0.1
-});
-
-// Initialize Everything
-document.addEventListener('DOMContentLoaded', () => {
-    initProjects();
-    
-    // Add scroll animation to project cards
-    document.querySelectorAll('.project-card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'all 0.6s ease-out';
-        observer.observe(card);
-    });
-
-    // Handle scroll events
-    window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        document.documentElement.style.setProperty('--scroll', `${scrolled}px`);
-    });
-});
-
-// Handle project card visibility
-observer.observe = function(target) {
-    target.style.opacity = '1';
-    target.style.transform = 'translateY(0)';
-};
